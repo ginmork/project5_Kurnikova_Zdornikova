@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="51e59e08-62ad-4ecc-835f-7a0cde5c7b78" name="Changes" comment="" />
+    <list default="true" id="51e59e08-62ad-4ecc-835f-7a0cde5c7b78" name="Changes" comment="lab 3">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -9,6 +12,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="35pM5D5JASFHS0KcxxcEQNmtmQ0" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -31,6 +37,18 @@
       <option name="presentableId" value="Default" />
       <updated>1763802375628</updated>
     </task>
+    <task id="LOCAL-00001" summary="lab 3">
+      <created>1763802495222</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1763802495222</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="lab 3" />
+    <option name="LAST_COMMIT_MESSAGE" value="lab 3" />
   </component>
 </project>
