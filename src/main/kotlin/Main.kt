@@ -1,28 +1,4 @@
-import kotlin.math.abs
-import kotlin.math.sqrt
-
-data class Point1(val x: Double, val y: Double)
-
-class Triangle(val vertexA: Point1, val vertexB: Point1, val vertexC: Point1) {
-    private fun area(a: Point1, b: Point1, c: Point1): Double {
-        return abs((b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y)) / 2.0
-    }
-
-    fun Check(): Boolean {
-        return area(vertexA, vertexB, vertexC) == 0.0
-    }
-
-    fun contains(queryPoint: Point1): Boolean {
-        val fullArea = area(vertexA, vertexB, vertexC)
-        val area1 = area(queryPoint, vertexB, vertexC)
-        val area2 = area(vertexA, queryPoint, vertexC)
-        val area3 = area(vertexA, vertexB, queryPoint)
-        val totalArea = area1 + area2 + area3
-        return totalArea == fullArea
-    }
-}
-
-fun readPoint1(label: String): Point1 {
+fun readPoint1(label: String): Point {
     while (true) {
         println("\n$label:")
         print("x = ")
@@ -38,7 +14,7 @@ fun readPoint1(label: String): Point1 {
         try {
             val x = xInput.trim().toDouble()
             val y = yInput.trim().toDouble()
-            return Point1(x, y)
+            return Point(x, y)
         } catch (e: NumberFormatException) {
             println("Ошибка: введите числа! Попробуйте снова.")
         }
@@ -67,15 +43,8 @@ fun mainTask1() {
     }
 }
 
-data class Point2(val x: Double, val y: Double) {
-    fun distanceTo(other: Point2): Double {
-        val dx = this.x - other.x
-        val dy = this.y - other.y
-        return sqrt(dx * dx + dy * dy)
-    }
-}
 
-fun readPoint2(label: String): Point2 {
+fun readPoint2(label: String): Point {
     while (true) {
         println("\n$label:")
         print("x = ")
@@ -86,7 +55,7 @@ fun readPoint2(label: String): Point2 {
         try {
             val x = xInput.trim().toDouble()
             val y = yInput.trim().toDouble()
-            return Point2(x, y)
+            return Point(x, y)
         } catch (e: NumberFormatException) {
             println("Ошибка: введите числа! Попробуйте снова.")
         }
@@ -104,14 +73,6 @@ fun mainTask2() {
     println("\nРасстояние между точками: %.4f".format(distance))
 }
 
-data class Point3(val x: Double, val y: Double) {
-    fun distanceTo(other: Point3): Double {
-        val dx = x - other.x
-        val dy = y - other.y
-        return sqrt(dx * dx + dy * dy)
-    }
-}
-
 fun readPointCount3(): Int {
     while (true) {
         print("Введите количество точек (должно быть больше 2): ")
@@ -125,7 +86,7 @@ fun readPointCount3(): Int {
     }
 }
 
-fun readPoint3(index: Int): Point3 {
+fun readPoint3(index: Int): Point {
     while (true) {
         println("\nТочка $index:")
         print("x = ")
@@ -136,7 +97,7 @@ fun readPoint3(index: Int): Point3 {
         try {
             val x = xInput.trim().toDouble()
             val y = yInput.trim().toDouble()
-            return Point3(x, y)
+            return Point(x, y)
         } catch (e: NumberFormatException) {
             println("  Ошибка: введите числа! Попробуйте снова.")
         }
@@ -145,7 +106,7 @@ fun readPoint3(index: Int): Point3 {
 
 fun mainTask3() {
     val n = readPointCount3()
-    val points = mutableListOf<Point3>()
+    val points = mutableListOf<Point>()
 
     println("Введите координаты $n точек:")
 
