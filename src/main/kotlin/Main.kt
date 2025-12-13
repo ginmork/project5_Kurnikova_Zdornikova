@@ -1,28 +1,28 @@
-/* import kotlin.math.abs
-data class Point(val x: Double, val y: Double)
+import kotlin.math.abs
+import kotlin.math.sqrt
 
-class Triangle(val p1: Point, val p2: Point, val p3: Point) {
-    private fun area(a: Point, b: Point, c: Point): Double {
+data class Point1(val x: Double, val y: Double)
+
+class Triangle(val vertexA: Point1, val vertexB: Point1, val vertexC: Point1) {
+    private fun area(a: Point1, b: Point1, c: Point1): Double {
         return abs((b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y)) / 2.0
     }
 
     fun Check(): Boolean {
-        return area(p1, p2, p3) == 0.0
+        return area(vertexA, vertexB, vertexC) == 0.0
     }
 
-    fun contains(point: Point): Boolean {
-        val bigArea = area(p1, p2, p3)
-        val a1 = area(point, p2, p3)
-        val a2 = area(p1, point, p3)
-        val a3 = area(p1, p2, point)
-        val sum = a1 + a2 + a3
-
-        return sum == bigArea
+    fun contains(queryPoint: Point1): Boolean {
+        val fullArea = area(vertexA, vertexB, vertexC)
+        val area1 = area(queryPoint, vertexB, vertexC)
+        val area2 = area(vertexA, queryPoint, vertexC)
+        val area3 = area(vertexA, vertexB, queryPoint)
+        val totalArea = area1 + area2 + area3
+        return totalArea == fullArea
     }
 }
 
-
-fun readPoint(label: String): Point {
+fun readPoint1(label: String): Point1 {
     while (true) {
         println("\n$label:")
         print("x = ")
@@ -38,47 +38,44 @@ fun readPoint(label: String): Point {
         try {
             val x = xInput.trim().toDouble()
             val y = yInput.trim().toDouble()
-            return Point(x, y)
+            return Point1(x, y)
         } catch (e: NumberFormatException) {
             println("Ошибка: введите числа! Попробуйте снова.")
         }
     }
 }
 
-fun main() {
+fun mainTask1() {
     println("Введите координаты трёх вершин треугольника:")
 
-    val p1 = readPoint("Первая точка")
-    val p2 = readPoint("Вторая точка")
-    val p3 = readPoint("Третья точка")
-    val testPoint = readPoint("Точка для проверки")
+    val vertexA = readPoint1("Вершина A")
+    val vertexB = readPoint1("Вершина B")
+    val vertexC = readPoint1("Вершина C")
+    val queryPoint = readPoint1("Проверяемая точка")
 
-    val triangle = Triangle(p1, p2, p3)
+    val triangle = Triangle(vertexA, vertexB, vertexC)
 
-    if (!triangle.Check()) {
+    if (triangle.Check()) {
         println("Ошибка: три точки лежат на одной прямой — треугольник не существует.")
         return
     }
 
-    if (triangle.contains(testPoint)) {
+    if (triangle.contains(queryPoint)) {
         println("Точка находится внутри или на границе треугольника.")
     } else {
         println("Точка находится снаружи треугольника.")
     }
 }
-*/
 
-/* import kotlin.math.sqrt
-
-data class Point(val x: Double, val y: Double) {
-    fun distanceTo(other: Point): Double {
+data class Point2(val x: Double, val y: Double) {
+    fun distanceTo(other: Point2): Double {
         val dx = this.x - other.x
         val dy = this.y - other.y
         return sqrt(dx * dx + dy * dy)
     }
 }
 
-fun readPoint(label: String): Point {
+fun readPoint2(label: String): Point2 {
     while (true) {
         println("\n$label:")
         print("x = ")
@@ -89,36 +86,33 @@ fun readPoint(label: String): Point {
         try {
             val x = xInput.trim().toDouble()
             val y = yInput.trim().toDouble()
-            return Point(x, y)
+            return Point2(x, y)
         } catch (e: NumberFormatException) {
             println("Ошибка: введите числа! Попробуйте снова.")
         }
     }
 }
 
-fun main() {
+fun mainTask2() {
     println("Введите координаты двух точек:")
 
-    val point1 = readPoint("Первая точка")
-    val point2 = readPoint("Вторая точка")
+    val firstPoint = readPoint2("Первая точка")
+    val secondPoint = readPoint2("Вторая точка")
 
-    val distance = point1.distanceTo(point2)
+    val distance = firstPoint.distanceTo(secondPoint)
 
     println("\nРасстояние между точками: %.4f".format(distance))
 }
- */
 
-/* import kotlin.math.sqrt
-
-data class Point(val x: Double, val y: Double) {
-    fun distanceTo(other: Point): Double {
+data class Point3(val x: Double, val y: Double) {
+    fun distanceTo(other: Point3): Double {
         val dx = x - other.x
         val dy = y - other.y
         return sqrt(dx * dx + dy * dy)
     }
 }
 
-fun readPointCount(): Int {
+fun readPointCount3(): Int {
     while (true) {
         print("Введите количество точек (должно быть больше 2): ")
         try {
@@ -131,7 +125,7 @@ fun readPointCount(): Int {
     }
 }
 
-fun readPoint(index: Int): Point {
+fun readPoint3(index: Int): Point3 {
     while (true) {
         println("\nТочка $index:")
         print("x = ")
@@ -142,21 +136,21 @@ fun readPoint(index: Int): Point {
         try {
             val x = xInput.trim().toDouble()
             val y = yInput.trim().toDouble()
-            return Point(x, y)
+            return Point3(x, y)
         } catch (e: NumberFormatException) {
             println("  Ошибка: введите числа! Попробуйте снова.")
         }
     }
 }
 
-fun main() {
-    val n = readPointCount()
-    val points = mutableListOf<Point>()
+fun mainTask3() {
+    val n = readPointCount3()
+    val points = mutableListOf<Point3>()
 
     println("Введите координаты $n точек:")
 
     for (i in 1..n) {
-        points.add(readPoint(i))
+        points.add(readPoint3(i))
     }
 
     for (i in points.indices) {
@@ -182,4 +176,26 @@ fun main() {
     println("\nМинимальное расстояние между точками: %.4f".format(minDist))
     println("Максимальное расстояние между точками: %.4f".format(maxDist))
 }
-*/
+
+fun main() {
+    while (true) {
+        println("Меню проекта:")
+        println("1. Проверка принадлежности точки треугольнику")
+        println("2. Расстояние между двумя точками")
+        println("3. Минимальное и максимальное расстояние среди N точек")
+        println("0. Выход")
+        print("Выберите номер задачи: ")
+
+        val choice = readln().trim()
+        when (choice) {
+            "1" -> mainTask1()
+            "2" -> mainTask2()
+            "3" -> mainTask3()
+            "0" -> {
+                println("Выход из программы.")
+                break
+            }
+            else -> println("Неверный ввод. Попробуйте снова.")
+        }
+    }
+}
