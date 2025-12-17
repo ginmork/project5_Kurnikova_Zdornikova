@@ -1,4 +1,5 @@
-fun readPoint1(label: String): Point {
+import kotlin.math.sqrt
+fun readPoint(label: String): Point {
     while (true) {
         println("\n$label:")
         print("x = ")
@@ -6,17 +7,13 @@ fun readPoint1(label: String): Point {
         print("y = ")
         val yInput = readln()
 
-        if (xInput == null || yInput == null) {
-            println("Ошибка: пустой ввод. Попробуйте снова.")
-            continue
-        }
+        val x = xInput.toDoubleOrNull()
+        val y = yInput.toDoubleOrNull()
 
-        try {
-            val x = xInput.trim().toDouble()
-            val y = yInput.trim().toDouble()
+        if (x == null || y == null) {
+            println("Ошибка: введите числа! Попробуйте снова")
+        } else {
             return Point(x, y)
-        } catch (e: NumberFormatException) {
-            println("Ошибка: введите числа! Попробуйте снова.")
         }
     }
 }
@@ -24,100 +21,57 @@ fun readPoint1(label: String): Point {
 fun mainTask1() {
     println("Введите координаты трёх вершин треугольника:")
 
-    val vertexA = readPoint1("Вершина A")
-    val vertexB = readPoint1("Вершина B")
-    val vertexC = readPoint1("Вершина C")
-    val queryPoint = readPoint1("Проверяемая точка")
+    val vertexA = readPoint("Вершина A")
+    val vertexB = readPoint("Вершина B")
+    val vertexC = readPoint("Вершина C")
+    val queryPoint = readPoint("Проверяемая точка")
 
     val triangle = Triangle(vertexA, vertexB, vertexC)
 
     if (triangle.Check()) {
-        println("Ошибка: три точки лежат на одной прямой — треугольник не существует.")
+        println("Ошибка: три точки лежат на одной прямой — треугольник не существует")
         return
     }
 
-    if (triangle.contains(queryPoint)) {
-        println("Точка находится внутри или на границе треугольника.")
-    } else {
-        println("Точка находится снаружи треугольника.")
-    }
-}
-
-
-fun readPoint2(label: String): Point {
-    while (true) {
-        println("\n$label:")
-        print("x = ")
-        val xInput = readln()
-        print("y = ")
-        val yInput = readln()
-
-        try {
-            val x = xInput.trim().toDouble()
-            val y = yInput.trim().toDouble()
-            return Point(x, y)
-        } catch (e: NumberFormatException) {
-            println("Ошибка: введите числа! Попробуйте снова.")
-        }
-    }
+    println(if (triangle.contains(queryPoint))
+        "Точка находится внутри или на границе треугольника"
+    else "Точка находится снаружи треугольника")
 }
 
 fun mainTask2() {
     println("Введите координаты двух точек:")
 
-    val firstPoint = readPoint2("Первая точка")
-    val secondPoint = readPoint2("Вторая точка")
-
-    val distance = firstPoint.distanceTo(secondPoint)
-
+    val firstPoint = readPoint("Первая точка")
+    val secondPoint = readPoint("Вторая точка")
+    val dx = firstPoint.x - secondPoint.x
+    val dy = firstPoint.y - secondPoint.y
+    val distance = sqrt(dx * dx + dy * dy)
     println("\nРасстояние между точками: %.4f".format(distance))
 }
 
-fun readPointCount3(): Int {
+fun readPointCount(): Int {
     while (true) {
         print("Введите количество точек (должно быть больше 2): ")
-        try {
-            val n = readln().trim().toInt()
-            if (n > 2) return n
-            println("Ошибка: количество должно быть больше 2. Попробуйте снова.")
-        } catch (e: NumberFormatException) {
-            println("Ошибка: введите целое число!")
-        }
-    }
-}
-
-fun readPoint3(index: Int): Point {
-    while (true) {
-        println("\nТочка $index:")
-        print("x = ")
-        val xInput = readln()
-        print("y = ")
-        val yInput = readln()
-
-        try {
-            val x = xInput.trim().toDouble()
-            val y = yInput.trim().toDouble()
-            return Point(x, y)
-        } catch (e: NumberFormatException) {
-            println("  Ошибка: введите числа! Попробуйте снова.")
-        }
+        val n = readln().toInt()
+        if (n > 2) return n
+        println("Ошибка: введите целое число больше 2")
     }
 }
 
 fun mainTask3() {
-    val n = readPointCount3()
+    val n = readPointCount()
     val points = mutableListOf<Point>()
 
     println("Введите координаты $n точек:")
 
     for (i in 1..n) {
-        points.add(readPoint3(i))
+        points.add(readPoint("Точка $i"))
     }
 
     for (i in points.indices) {
         for (j in i + 1 until points.size) {
-            if (points[i].x == points[j].x && points[i].y == points[j].y) {
-                println("Ошибка: точки не должны совпадать! Точка ${i + 1} и ${j + 1} одинаковые.")
+            if (points[i] == points[j]) {
+                println("Ошибка: точки не должны совпадать! Точка ${i + 1} и ${j + 1} одинаковые")
                 return
             }
         }
@@ -128,7 +82,10 @@ fun mainTask3() {
 
     for (i in points.indices) {
         for (j in i + 1 until points.size) {
-            val dist = points[i].distanceTo(points[j])
+            val dx = points[i].x - points[j].x
+            val dy = points[i].y - points[j].y
+            val dist = sqrt(dx * dx + dy * dy)
+
             if (dist < minDist) minDist = dist
             if (dist > maxDist) maxDist = dist
         }
@@ -140,23 +97,22 @@ fun mainTask3() {
 
 fun main() {
     while (true) {
-        println("Меню проекта:")
+        println("\nМеню:")
         println("1. Проверка принадлежности точки треугольнику")
         println("2. Расстояние между двумя точками")
         println("3. Минимальное и максимальное расстояние среди N точек")
         println("0. Выход")
         print("Выберите номер задачи: ")
 
-        val choice = readln().trim()
-        when (choice) {
+        when (readln()) {
             "1" -> mainTask1()
             "2" -> mainTask2()
             "3" -> mainTask3()
             "0" -> {
                 println("Выход из программы.")
-                break
+                return
             }
-            else -> println("Неверный ввод. Попробуйте снова.")
+            else -> println("Неверный ввод. Попробуйте снова")
         }
     }
 }
